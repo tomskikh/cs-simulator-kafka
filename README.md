@@ -1,6 +1,6 @@
-# CloudStack Simulator as Docker Image which supports exporting events to Kafka
+# CloudStack Simulator With Kafka Event Bus Integration
 
-The purpose of this docker image is to run the CloudStack which exports event to Kafka for integration tests
+ACS Version is 4.9.3
 
 ## Setup
 
