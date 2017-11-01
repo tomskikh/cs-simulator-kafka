@@ -74,7 +74,7 @@ COPY zones.cfg /opt/zones.cfg
 COPY nginx_default.conf /etc/nginx/sites-available/default
 RUN pip install cs
 
-FROM build-simulator-core AS simulator-with-kafka
+FROM build-simulator-core
 
 COPY run.sh /opt/run.sh
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
