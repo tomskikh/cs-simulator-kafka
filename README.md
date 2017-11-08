@@ -10,7 +10,11 @@ The docker image runs the CloudStack simulator and contains two zones for the di
 * Zone: Sandbox-simulator-basic
 
 ## Specify environment variables:
-    KAFKA_HOST, KAFKA_PORT, KAFKA_ASKS, KAFKA_TOPIC, KAFKA_WRITE_RETRIES
+    KAFKA_HOST,
+    KAFKA_PORT,
+    KAFKA_ASKS ("all" by default),
+    KAFKA_TOPIC ("cs" by default),
+    KAFKA_WRITE_RETRIES (1 by default)
 
 ## Prepare kafka
     docker run -d -p 2181:2181 -p $KAFKA_PORT:$KAFKA_PORT --env ADVERTISED_HOST=$KAFKA_HOST --env ADVERTISED_PORT=$KAFKA_PORT spotify/kafka

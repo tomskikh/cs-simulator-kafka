@@ -76,6 +76,10 @@ RUN pip install cs
 
 FROM build-simulator-core
 
+ENV KAFKA_ASKS=all
+ENV KAFKA_WRITE_RETRIES=1
+ENV KAFKA_TOPIC=cs
+
 COPY run.sh /opt/run.sh
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN mkdir -p ./client/target/classes/META-INF/cloudstack/core
