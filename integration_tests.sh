@@ -1,4 +1,4 @@
-if [ $# -ne 3 ]; then
+if [ $# -ne 4 ]; then
     echo "Please run this script with four parameters (KAFKA_HOST, KAFKA_PORT, KAFKA_TOPIC, SIMULATOR_PORT)"
     exit 1;
 fi
