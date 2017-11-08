@@ -1,18 +1,40 @@
-if [ $# -ne 5 ]; then
-    echo "Please run this script with four parameters (KAFKA_HOST, KAFKA_PORT, KAFKA_TOPIC, SIMULATOR_PORT)"
-    exit 1;
+#!/bin/bash
+
+ITERATIONS=40
+SLEEP=30
+
+for i in `seq 1 $ITERATIONS`
+do
+    curl -s -I http://localhost:${SIMULATOR_PORT}/client/ | head -1 | grep "200"
+
+    if [ $? -eq 0 ]
+    then
+        echo "OK"
+        break
+    else
+        echo "retry number $i"
+        sleep $SLEEP
+    fi
+
+    if [ $i -eq $ITERATIONS ]
+    then
+        exit 1
+    fi
+done
+
+sleep $SLEEP
+
+NUMBER_OF_MESSAGES=$(docker exec -i $KAFKA_CONTAINER_ID ./opt/kafka_2.11-0.10.1.0/bin/kafka-run-class.sh kafka.tools.GetOffsetShell \
+        --broker-list $KAFKA_HOST:$KAFKA_PORT \
+        --topic $KAFKA_TOPIC --time -1 --offsets 1 \
+        | awk -F ":" '{sum += $3} END {print sum}')
+
+echo "NUMBER_OF_MESSAGES = $NUMBER_OF_MESSAGES"
+
+if [ -z $NUMBER_OF_MESSAGES ]
+then exit 1
 fi
 
-KAFKA_HOST=$1
-KAFKA_PORT=$2
-KAFKA_TOPIC=$3
-SIMULATOR_PORT=$4
-KAFKA_CONTAINER=$5
-
-curl --fail http://localhost:${SIMULATOR_PORT}/client/ --retry 40 --retry-delay 30
-
-test $(docker exec -it $KAFKA_CONTAINER ./bin/kafka-run-class.sh kafka.tools.GetOffsetShell \
-        --broker-list $KAFKA_HOST: $KAFKA_PORT \
-        --topic $KAFKA_TOPIC --time -1 --offsets 1 \
-        | awk -F ":" '{sum += $3} END {print sum}' \
-      ) -gt 0
+if [ $NUMBER_OF_MESSAGES -eq 0 ]
+then exit 1
+fi
