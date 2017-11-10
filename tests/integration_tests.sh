@@ -31,7 +31,7 @@ NUMBER_OF_MESSAGES=$(docker exec -i $KAFKA_CONTAINER_ID ./opt/kafka_2.11-0.10.1.
 
 echo "NUMBER_OF_MESSAGES = $NUMBER_OF_MESSAGES"
 
-if [ -z $NUMBER_OF_MESSAGES ]
+if [ -z "$NUMBER_OF_MESSAGES" ]
 then exit 1
 fi
 
