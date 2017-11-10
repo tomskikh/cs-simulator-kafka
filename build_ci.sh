@@ -28,7 +28,8 @@ echo "-------------------- Integration tests --------------------"
 
 sh ./integration_tests.sh
 
-if [[ -n $BRANCH_NAME && $BRANCH_NAME == origin/master ]]; then
+if [ -n $BRANCH_NAME ]; then
+    if [ $BRANCH_NAME == origin/master ]; then
 
 	docker login -u="$USERNAME" -p="$PASSWORD"
 
@@ -40,4 +41,5 @@ if [[ -n $BRANCH_NAME && $BRANCH_NAME == origin/master ]]; then
 
 	docker logout
 
+	fi
 fi
