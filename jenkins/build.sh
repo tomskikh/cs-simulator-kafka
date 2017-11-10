@@ -9,7 +9,7 @@ export SIMULATOR_PORT=8888
 
 export KAFKA_CONTAINER_ID=$(docker run -d --rm --tty=true -p 2181:2181 -p $KAFKA_PORT:$KAFKA_PORT --env ADVERTISED_HOST=$KAFKA_HOST --env ADVERTISED_PORT=$KAFKA_PORT spotify/kafka)
 
-TAG=`cat version`
+TAG=`cat ../version`
 
 IMAGE_REPOSITORY_WITH_TAG=$IMAGE_REPOSITORY:$TAG
 
@@ -26,7 +26,7 @@ docker run --rm -e KAFKA_HOST="${KAFKA_HOST}" \
 
 echo "-------------------- Integration tests --------------------"
 
-sh ./integration_tests.sh
+sh ../tests/integration_tests.sh
 
 if [ -n $BRANCH_NAME ]; then
     if [ $BRANCH_NAME == origin/master ]; then
