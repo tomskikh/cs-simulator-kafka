@@ -1,5 +1,11 @@
 #!/bin/bash
 
-docker stop $(docker ps -a | grep -E "spotify/kafka|$IMAGE_REPOSITORY" | awk '{ print $1 }')
+CONTAINERS=$(docker ps -a | grep -E "spotify/kafka|$IMAGE_REPOSITORY" | awk '{ print $1 }')
+echo "Containers: '$CONTAINERS'"
+docker stop $CONTAINERS
+
+IMAGES=$(docker images | grep "$IMAGE_REPOSITORY" | awk ' {print $1 ":" $2} ')
+echo "Simulator images: '$IMAGES'"
+
 docker rmi spotify/kafka
-docker rmi $(docker images | grep "$IMAGE_REPOSITORY" | awk ' {print $1 ":" $2} ')
+docker rmi $IMAGES
