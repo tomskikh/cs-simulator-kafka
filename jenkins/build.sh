@@ -28,9 +28,9 @@ echo "-------------------- Integration tests --------------------"
 
 sh ./tests/integration_tests.sh
 
-echo $BRANCH_NAME
-if [ -n "$BRANCH_NAME" ]; then
-    if [ "$BRANCH_NAME" = "origin/master" ]; then
+echo "git branch: $GIT_BRANCH"
+if [ -n "$GIT_BRANCH" ]; then
+    if [ "$GIT_BRANCH" = "origin/master" ]; then
 
 	docker login -u="$USERNAME" -p="$PASSWORD"
 
