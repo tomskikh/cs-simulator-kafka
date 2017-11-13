@@ -2,7 +2,7 @@
 
 export KAFKA_PORT=9092
 export KAFKA_TOPIC=cs
-KAFKA_ASKS=all
+KAFKA_ACKS=all
 KAFKA_WRITE_RETRIES=1
 
 export SIMULATOR_PORT=8888
@@ -19,7 +19,7 @@ docker build -t $IMAGE_REPOSITORY_WITH_TAG .
 
 docker run --rm -e KAFKA_HOST="${KAFKA_HOST}" \
                 -e KAFKA_PORT="${KAFKA_PORT}" \
-                -e KAFKA_ASKS="${KAFKA_ASKS}" \
+                -e KAFKA_ACKS="${KAFKA_ACKS}" \
                 -e KAFKA_TOPIC="${KAFKA_TOPIC}" \
                 -e KAFKA_WRITE_RETRIES="${KAFKA_WRITE_RETRIES}" \
                 --name cloudstack-kafka -d -p $SIMULATOR_PORT:$SIMULATOR_PORT $IMAGE_REPOSITORY_WITH_TAG

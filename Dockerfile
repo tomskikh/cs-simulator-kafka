@@ -76,7 +76,7 @@ RUN pip install cs
 
 FROM build-simulator-core
 
-ENV KAFKA_ASKS=all
+ENV KAFKA_ACKS=all
 ENV KAFKA_WRITE_RETRIES=1
 ENV KAFKA_TOPIC=cs
 

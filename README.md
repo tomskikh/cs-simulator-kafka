@@ -12,7 +12,7 @@ The docker image runs the CloudStack simulator and contains two zones for the di
 ## Specify environment variables:
     KAFKA_HOST,
     KAFKA_PORT,
-    KAFKA_ASKS ("all" by default),
+    KAFKA_ACKS ("all" by default),
     KAFKA_TOPIC ("cs" by default),
     KAFKA_WRITE_RETRIES (1 by default)
 
@@ -27,7 +27,7 @@ The docker image runs the CloudStack simulator and contains two zones for the di
 
     docker run -e KAFKA_HOST="${KAFKA_HOST}" \
                -e KAFKA_PORT="${KAFKA_PORT}" \
-               -e KAFKA_ASKS="${KAFKA_ASKS}" \
+               -e KAFKA_ACKS="${KAFKA_ACKS}" \
                -e KAFKA_TOPIC="${KAFKA_TOPIC}" \
                -e KAFKA_WRITE_RETRIES="${KAFKA_WRITE_RETRIES}" \
                --name cloudstack-kafka -d -p 8888:8888 bwsw/cs-simulator-kafka
