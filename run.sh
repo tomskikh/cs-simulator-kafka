@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "bootstrap.servers=$KAFKA_HOST:$KAFKA_PORT\nacks=$KAFKA_ASKS\ntopic=$KAFKA_TOPIC\nretries=$KAFKA_WRITE_RETRIES" | cat > kafka.producer.properties
+echo -e "bootstrap.servers=$KAFKA_HOST:$KAFKA_PORT\nacks=$KAFKA_ACKS\ntopic=$KAFKA_TOPIC\nretries=$KAFKA_WRITE_RETRIES" | cat > kafka.producer.properties
 mv kafka.producer.properties /opt/cloudstack/client/target/generated-webapp/WEB-INF/classes/kafka.producer.properties
 
 until nc -z localhost 8096; do
