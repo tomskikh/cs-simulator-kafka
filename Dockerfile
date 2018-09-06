@@ -51,7 +51,7 @@ RUN mkdir -p /var/run/mysqld; \
     chown mysql /var/run/mysqld; \
     echo '''sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"''' >> /etc/mysql/mysql.conf.d/mysqld.cnf
 
-RUN (/usr/bin/mysqld_safe &); sleep 5; mysqladmin -u root -proot password ''
+RUN (/usr/bin/mysqld_safe &); sleep 30; mysqladmin -u root -proot password ''
 
 RUN wget https://github.com/apache/cloudstack/archive/4.11.1.0.tar.gz -O /opt/cloudstack.tar.gz; \
     mkdir -p /opt/cloudstack; \
