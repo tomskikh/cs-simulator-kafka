@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-FROM ubuntu:16.04 AS build-simulator-core
+FROM ubuntu:16.04
 
 RUN echo 'mysql-server mysql-server/root_password password root' | debconf-set-selections \
     && echo 'mysql-server mysql-server/root_password_again password root' | debconf-set-selections
@@ -58,28 +58,4 @@ RUN mvn -Pdeveloper -Dsimulator -DskipTests clean install
 RUN mvn -Pdeveloper -Dsimulator dependency:go-offline
 RUN mvn -pl client jetty:run -Dsimulator -Djetty.skip -Dorg.eclipse.jetty.annotations.maxWait=120
 
-RUN (/usr/bin/mysqld_safe &) \
-    && sleep 5 \
-    && mvn -Pdeveloper -pl developer -Ddeploydb \
-    && mvn -Pdeveloper -pl developer -Ddeploydb-simulator \
-    && MARVIN_FILE=$(find /opt/cloudstack/tools/marvin/dist/ -name "Marvin*.tar.gz") \
-    && pip install $MARVIN_FILE
-
-COPY zones.cfg /opt/zones.cfg
-COPY nginx_default.conf /etc/nginx/sites-available/default
-RUN pip install cs
-
-FROM build-simulator-core
-
-ENV KAFKA_ACKS=all
-ENV KAFKA_WRITE_RETRIES=1
-ENV KAFKA_TOPIC=cs
-
-COPY run.sh /opt/run.sh
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-RUN mkdir -p ./client/target/classes/META-INF/cloudstack/core
-COPY spring-event-bus-context.xml /opt/cloudstack/client/target/classes/META-INF/cloudstack/core/spring-event-bus-context.xml
-
-EXPOSE 8888 8080 8096
-
-CMD ["/usr/bin/supervisord"]
+CMD ["ls"]
