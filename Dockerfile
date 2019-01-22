@@ -20,6 +20,27 @@ FROM ubuntu:16.04
 RUN echo 'mysql-server mysql-server/root_password password root' | debconf-set-selections \
     && echo 'mysql-server mysql-server/root_password_again password root' | debconf-set-selections
 
-RUN dpkg -l | tee installed.log
+RUN apt-get -qq update && apt-get install -qq \
+    genisoimage \
+    libffi-dev \
+    libssl-dev \
+    sudo \
+    ipmitool \
+    maven \
+    netcat \
+    openjdk-8-jdk \
+    python-dev \
+    python-setuptools \
+    python-pip \
+    python-mysql.connector \
+    supervisor \
+    wget \
+    nginx \
+    jq \
+    mysql-server \
+    openssh-client \
+    && apt-get clean all \
+    && rm -rf /var/lib/apt/lists/* \
+    && dpkg -l | tee installed.log
 
 CMD ["cat", "installed.log"]
