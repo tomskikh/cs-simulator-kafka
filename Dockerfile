@@ -55,4 +55,8 @@ RUN wget https://github.com/apache/cloudstack/archive/4.11.2.0.tar.gz -O /opt/cl
 
 WORKDIR /opt/cloudstack
 
-CMD ["cat", "/installed.log"]
+RUN mvn -Pdeveloper -Dsimulator -DskipTests clean install
+RUN mvn -Pdeveloper -Dsimulator dependency:go-offline
+RUN mvn -pl client jetty:run -Dsimulator -Djetty.skip -Dorg.eclipse.jetty.annotations.maxWait=120
+
+CMD ["ls"]
