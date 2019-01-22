@@ -40,7 +40,19 @@ RUN apt-get -qq update && apt-get install -qq \
     mysql-server \
     openssh-client \
     && apt-get clean all \
-    && rm -rf /var/lib/apt/lists/* \
-    && dpkg -l | tee installed.log
+    && rm -rf /var/lib/apt/lists/*
+    && dpkg -l | tee /installed.log
 
-CMD ["cat", "installed.log"]
+RUN mkdir -p /var/run/mysqld \
+    && chown mysql /var/run/mysqld \
+    && echo '''sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"''' >> /etc/mysql/mysql.conf.d/mysqld.cnf
+
+RUN find /var/lib/mysql -type f -exec touch {} \; && (/usr/bin/mysqld_safe &) && sleep 30 && mysqladmin -u root -proot password ''
+
+RUN wget https://github.com/apache/cloudstack/archive/4.11.2.0.tar.gz -O /opt/cloudstack.tar.gz \
+    && mkdir -p /opt/cloudstack \
+    && tar xvzf /opt/cloudstack.tar.gz -C /opt/cloudstack --strip-components=1
+
+WORKDIR /opt/cloudstack
+
+CMD ["cat", "/installed.log"]
