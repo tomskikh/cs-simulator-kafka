@@ -40,7 +40,7 @@ RUN apt-get -qq update && apt-get install -qq \
     mysql-server \
     openssh-client \
     && apt-get clean all \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
     && dpkg -l | tee /installed.log
 
 RUN mkdir -p /var/run/mysqld \
